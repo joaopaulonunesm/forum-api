@@ -38,16 +38,12 @@ public class TopicoService {
 
     private TopicoEntity toEntity(TopicoRequest topicoRequest) {
         return TopicoEntity.builder()
-                .titulo(topicoRequest.getTitulo())
-                .conteudo(topicoRequest.getConteudo())
+                .titulo(topicoRequest.titulo())
+                .conteudo(topicoRequest.conteudo())
                 .build();
     }
 
     private static TopicoResponse toResponse(TopicoEntity topicoEntity) {
-        return TopicoResponse.builder()
-                .id(topicoEntity.getId())
-                .titulo(topicoEntity.getTitulo())
-                .conteudo(topicoEntity.getConteudo())
-                .build();
+        return new TopicoResponse(topicoEntity.getId(),topicoEntity.getTitulo(),topicoEntity.getConteudo());
     }
 }

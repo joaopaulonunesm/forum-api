@@ -1,12 +1,4 @@
 package com.forum.controllers.models;
 
-import lombok.*;
-
-@NoArgsConstructor
-@AllArgsConstructor
-@Getter
-@Builder
-public class Error {
-    private String code;
-    private String message;
+public record Error(String code, String message) {
 }

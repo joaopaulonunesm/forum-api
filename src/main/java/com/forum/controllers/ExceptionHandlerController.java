@@ -23,18 +23,16 @@ public class ExceptionHandlerController {
     private final MessageSource messageSource;
 
     @ExceptionHandler(ServiceException.class)
-    @ResponseStatus(HttpStatus.UNPROCESSABLE_ENTITY)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
     public Response handleServiceException(ServiceException serviceException) {
         String message = messageSource.getMessage(serviceException.getCodigo(), null, LocaleContextHolder.getLocale());
-        Error error = Error.builder().code(serviceException.getCodigo()).message(message).build();
-        return Response.builder().errors(List.of(error)).build();
+        return Response.builder().errors(List.of(new Error(serviceException.getCodigo(), message))).build();
     }
 
     @ExceptionHandler(Exception.class)
     @ResponseStatus(HttpStatus.UNPROCESSABLE_ENTITY)
     public Response handleException(Exception serviceException) {
         String message = messageSource.getMessage(CodigoErro.ERRO_GENERICO.getCodigo(), null, LocaleContextHolder.getLocale());
-        Error error = Error.builder().code(CodigoErro.ERRO_GENERICO.getCodigo()).message(message).build();
-        return Response.builder().errors(List.of(error)).build();
+        return Response.builder().errors(List.of(new Error(CodigoErro.ERRO_GENERICO.getCodigo(), message))).build();
     }
 }

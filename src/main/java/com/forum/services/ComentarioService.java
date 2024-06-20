@@ -24,21 +24,18 @@ public class ComentarioService {
         comentarioRepository.save(toEntity(topico, comentarioRequest));
     }
 
-    public List<ComentarioResponse> buscarPorTopico(UUID idTopico){
+    public List<ComentarioResponse> buscarPorTopico(UUID idTopico) {
         return comentarioRepository.findByTopicoId(idTopico).stream().map(ComentarioService::toDomain).collect(Collectors.toList());
     }
 
     private ComentarioEntity toEntity(TopicoEntity topico, ComentarioRequest comentarioRequest) {
         return ComentarioEntity.builder()
                 .topico(topico)
-                .texto(comentarioRequest.getTexto())
+                .texto(comentarioRequest.texto())
                 .build();
     }
 
     public static ComentarioResponse toDomain(ComentarioEntity comentarioEntity) {
-        return ComentarioResponse.builder()
-                .id(comentarioEntity.getId())
-                .texto(comentarioEntity.getTexto())
-                .build();
+        return new ComentarioResponse(comentarioEntity.getId(), comentarioEntity.getTexto());
     }
 }
