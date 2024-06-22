@@ -26,8 +26,7 @@ public class UserService {
         }
 
         String encryptedPassword = new BCryptPasswordEncoder().encode(data.password());
-        User user = new User(data.login(), encryptedPassword, data.role());
-        user = userRepository.save(user);
-        log.info("usuario criado: {}", user);
+        User user = new User(data.login(), encryptedPassword);
+        userRepository.save(user);
     }
 }
